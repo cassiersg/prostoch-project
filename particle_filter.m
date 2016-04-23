@@ -28,8 +28,8 @@ function [x_est, x_pre, x_post] = particle_filter(x_init, likelihood, gen_next, 
 %   x_post: particles after correction and resampling for signal x, for t =
 %   1 to t_max
 
-n = size(init_particles, 2);
-dim = size(init_particles, 1);
+n = size(x_init, 2);
+dim = size(x_init, 1);
 
 x_est = zeros(dim, t_max);
 x_pre = zeros(dim, n, t_max+1);
@@ -40,10 +40,10 @@ weights(:, 1) = ones(n, 1)/n;
 
 for t = 1:t_max
     % weights
-    w = weights(:, t) .* likelihood(t, x_pre(:,:,t));
+    w = weights(:, t) .* likelihood(t, x_pre(:,:,t))';
     w = w / sum(w);
     % estimation
-    x_est(:,t) = x_pre(:,:,t)*w';
+    x_est(:,t) = x_pre(:,:,t)*w;
     % correction & resampling
     n_eff = 1/sum(w.^2);
     if n_eff < n_min
@@ -52,10 +52,10 @@ for t = 1:t_max
                 sample = randsample(1:n, n, true, w);
                 x_post(:,:,t) = x_pre(:,sample,t);
             case 'postRPF'
-                fprintf('resample t= %i, n_eff/n = %f\n', t, n_eff/n);
+                %fprintf('resample t= %i, n_eff/n = %f\n', t, n_eff/n);
                 m = mean(x_pre(:,:,t), 2);
                 xt_c = x_pre(:,:,t) - repmat(m, 1, n);
-                S = (repmat(w, dim, 1) .* xt_c) * xt_c';
+                S = (repmat(w', dim, 1) .* xt_c) * xt_c';
                 A = chol(S, 'lower');
                 h_opt = (4/(dim+2))^(1/(dim+4)) * n^(-1/(dim+4));
                 sample = randsample(1:n, n, true, w);
