@@ -1,6 +1,6 @@
 
 % the question we answer
-question = 'q5';
+question = 'q51';
 
 % global variables
 load data.mat
@@ -18,7 +18,6 @@ F = [1 0 T 0;
  
  n = 5000;
 
-sA = 1e-6;
 s_r = 0.1;
 s_theta = 1e-4;
 s_speed = 0.1;
@@ -28,9 +27,15 @@ switch question
     case 'q4'
         n_min = +Inf;
         filtering = 'SIR';
-    case 'q5'
+        sA = 1e-6;
+    case 'q51'
+        n_min = +Inf;
+        filtering = 'SIR';
+        sA = 0;
+    case 'q52'
         n_min = n/3;
         filtering = 'postRPF';
+        sA = 0;
 end
 
 % particle flitering
