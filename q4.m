@@ -42,7 +42,7 @@ for t = 1:k_max
             xt_pre_resampling(2,:,t) - observer(2,t));
     w = normpdf(measurements(t) - est_mes, 0, s_theta);
     w = w / sum(w);
-    % prediction
+    % estimation
     xt_estimated(:,t) = xt_pre_resampling(:,:,t)*w';
     % correction & resampling
     sample = randsample(1:n, n, true, w);

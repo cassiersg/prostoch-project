@@ -42,7 +42,7 @@ for t = 1:k_max
     est_mes = atan2(xt(1,:) - observer(1,t), xt(2,:) - observer(2,t));
     w = w .* normpdf(measurements(t) - est_mes, 0, s_theta);
     w = w / sum(w);
-    % prediction
+    % estimation
     xt_estimated(:,t) = xt * w';
     % correction & resampling
     n_eff = 1/sum(w.^2);
