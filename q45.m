@@ -1,7 +1,7 @@
 
 % the question we answer
-question = 'q51';
-
+question = 'q52';
+disp(['Results for question : ', question])
 % global variables
 load data.mat
 T = 1;
@@ -50,7 +50,14 @@ xt = [...
     speed_init .* sin(course_init)];
 likelihood = @(t, p)normpdf(measurements(t) - atan2(p(1,:)-observer(1,t), p(2,:)-observer(2,t)), 0, sqrt(s_theta));
 gen_next = @(t, p)F*p+Gamma*normrnd(0, sqrt(sA), 2, n);
-[xt_estimated, xt_pre_resampling, xt_post_resampling] = particle_filter(...
+[xt_estimated, xt_pre_resampling, xt_post_resampling,n_diff] = particle_filter(...
     xt, likelihood, gen_next, length(measurements), n_min, filtering);
 % display results
-plots_q4;
+switch question
+    case 'q4'
+        plots_q4;
+    case 'q51'
+        plots_q5;
+    case 'q52'
+        plots_q5;
+end
