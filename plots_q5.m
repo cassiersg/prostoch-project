@@ -8,7 +8,7 @@ figure('Name', ['k = ', num2str(t(end))]);
 subplot(2, 1, 1);
 title('positions');
 %hold on;
-semilogy(t,n_diff, '.');
+semilogy(t,n_diff, '.', 'MarkerSize', 15);
 xlabel('step')
 ylabel('number of points')
 legend('number of points (log) according to step');

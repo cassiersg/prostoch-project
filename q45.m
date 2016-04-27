@@ -1,6 +1,6 @@
 
 % the question we answer
-question = 'q52';
+question = 'q51';
 disp(['Results for question : ', question])
 % global variables
 load data.mat

@@ -30,9 +30,9 @@ function [x_est, x_pre, x_post,n_diff] = particle_filter(x_init, likelihood, gen
 %   n_diff: number of particles used at each step
 
 n = size(x_init, 2);
-n_diff = size(1,t_max);
 dim = size(x_init, 1);
 
+n_diff = zeros(t_max, 1);
 x_est = zeros(dim, t_max);
 x_pre = zeros(dim, n, t_max+1);
 x_post = zeros(dim, n, t_max);
@@ -46,9 +46,6 @@ for t = 1:t_max
     w = w / sum(w);
     % estimation
     x_est(:,t) = x_pre(:,:,t)*w;
-    
-
-    % 
 
     % correction & resampling
     n_eff = 1/sum(w.^2);
@@ -58,7 +55,6 @@ for t = 1:t_max
                 sample = randsample(1:n, n, true, w);
                 x_post(:,:,t) = x_pre(:,sample,t);
             case 'postRPF'
-                
                 %fprintf('resample t= %i, n_eff/n = %f\n', t, n_eff/n);
                 m = mean(x_pre(:,:,t), 2);
                 xt_c = x_pre(:,:,t) - repmat(m, 1, n);
@@ -77,18 +73,9 @@ for t = 1:t_max
     end
     % prediction
     x_pre(:,:,t+1) = gen_next(t, x_post(:,:,t));
-    
-    % count the number of different particles VERY SLOW!
-    countDiff = zeros(size(x_post(1,:,t)));
-        for i = 1:length(countDiff)
-            temp = sum(x_post(:,:,t).^2,1);
-            countDiff(i) = sum(temp==temp(i));
-            if countDiff(i) ~=1
-                countDiff(i) =0;
-            end
-        end
-        n_diff(t)=sum(countDiff);
-    
+
+    % count the number of different particles
+    n_diff(t) = 1 + sum(sum(abs(diff(sortrows(x_post(:,:,t)'))), 2) ~= 0);    
 end
 
 end
