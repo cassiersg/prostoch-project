@@ -1,6 +1,8 @@
 
-m_files.zip: *.m
-	zip m_files.zip *.m
+zip: projet_prostoch.zip
+projet_prostoch.zip: .FORCE
+	git archive master --format zip -o projet_prostoch.zip
+.PHONY: zip
 
-zip: m_files.zip
-all: zip
+.FORCE:
+
