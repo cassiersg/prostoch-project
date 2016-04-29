@@ -1,0 +1,52 @@
+*.log
+*.aux
+*.pdf
+*.swp
+*.DS_Store
+*.make
+*.d
+*~
+*.fls
+*.temp
+*.dvi
+*.out
+*.gnuplot
+*.table
+*.toc
+*.synctex.gz
+*.ps
+*.bak
+*.tex.bak
+*.mat
+*.msh
+*.ply2
+
+# bibtex
+*.bbl
+*.blg
+
+# latexmk
+*.fdb_latexmk
+*.fls
+
+# beamer
+*.nav
+*.snm
+*.vrb
+
+# config file for smartcp
+config.yml
+
+# fichier de sauvegarde
+
+*.kate-swp
+*.backup
+*.tdo
+
+# fichiers spécifiques
+hemisphere_302706.msh
+triangles_302706.txt
+
+Helice1.txt
+Helice2.txt
+Helice3.txt
