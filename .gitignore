@@ -17,9 +17,6 @@
 *.ps
 *.bak
 *.tex.bak
-*.mat
-*.msh
-*.ply2
 
 # bibtex
 *.bbl
@@ -44,9 +41,3 @@ config.yml
 *.tdo
 
 # fichiers spécifiques
-hemisphere_302706.msh
-triangles_302706.txt
-
-Helice1.txt
-Helice2.txt
-Helice3.txt
