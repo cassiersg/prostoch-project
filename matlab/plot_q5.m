@@ -1,7 +1,7 @@
 % @Authors Gaetan Cassiers & Bruno Losseau
 % @Course LINMA1731 - PROJECT - UCL
 % @Date 12/05/16
-% % Script that computes  and plots the results for question 5.
+% % Script that computes and plots the results for question 5.
 
 % 1. Results with the SIR filter 
 [xt_estimated, ~, ~, n_diff] = q51();

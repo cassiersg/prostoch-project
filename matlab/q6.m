@@ -1,4 +1,15 @@
-% q6
+function [CRLBrms, RMS] = q6()
+% @Authors Gaetan Cassiers & Bruno Losseau
+% @Course LINMA1731 - PROJECT - UCL
+% @Date 12/05/16
+% Q6 computes Cramer-Rao lower bound for the trajectory estimation and the
+% empirical variance of the particle filter estimator.
+% OUTPUT :
+%   CRLBrms Cramer-Rao lower bound on the variance on the variance of the
+%          estimated position (norm of variance in X and variance in Y)
+%   RMS empirical variance of the particle set (norm of variance in X and
+%           variance in Y)
+
 load data.mat;
 T = .5;
 [F, Gamma, n] = gen_parameters(T);
@@ -64,8 +75,4 @@ for i = 1:k_max
                  )));
 end
 
-% plot of the results
-close all;
-figure('Name','q6 : CRLB and RMS error considering relative position');
-plot(1:k_max,CRLBrms,'.',1:k_max,RMS,'.');
-legend('CRLB','RMS error');
+end
