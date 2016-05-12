@@ -4,11 +4,11 @@
 % Script that plots the results for question 2.
 
 k = 200; %number of steps
-s_a = {[0, 0, 0], [0, 0.5, 1], [0, 0.5, 1], [0.5, 0.5, 0.5]};
-s_t = {[0, 0.5, 1], [0, 0, 0], [0, 0.5, 1], [0.1, 0.1, 0.1]};
+s_a = {[0, 0, 0], [1, 0.5, 0], [1, 0.5, 0], [0.5, 0.5, 0.5]};
+s_t = {[1, 0.5, 0], [0, 0, 0], [1, 0.5, 0], [0.1, 0.1, 0.1]};
 for i = 1:length(s_a)
     f = figure();
     gen_plot2(s_a{i}, s_t{i}, k);
-    saveas(f, sprintf('Results/q2_%i.png', i))
+    savefig(sprintf('q2_%i', i));
     close(f)
 end
