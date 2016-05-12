@@ -1,9 +1,10 @@
 function [x_est, x_pre, x_post,n_diff] = particle_filter(x_init, likelihood, gen_next, t_max, n_min, resampling)
-%[x_est, x_pre, x_post] = particle_filter(x_init, likelihood, gen_next,
-% t_max, n_min, resampling)
-% Computes an estimate of a signal x using a particle filter
+% @Authors Gaetan Cassiers & Bruno Losseau
+% @Course LINMA1731 - PROJECT - UCL
+% @Date 12/05/16
 %
-% Input arguments:
+% Computes an estimate of a signal x using a particle filter
+% INPUT
 %   x_init: an initial set of particles (estimate for t = 1). Each column
 %       of the matrix correspond to one particle.
 %   likelihood(t, particles): a function returning the probability for each
@@ -22,7 +23,7 @@ function [x_est, x_pre, x_post,n_diff] = particle_filter(x_init, likelihood, gen
 %       amongst old ones)
 %       'postRPF':  post regularized particle filter (new particles are
 %       taken from a continuous density derived from old particles).
-% Output arguments:
+% OUTPUT
 %   x_est: estimate of the x signal for t = 1 to t = t_max
 %   x_pre: prevision particles for signal x for t = 1 to t_max
 %   x_post: particles after correction and resampling for signal x, for t =

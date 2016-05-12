@@ -1,4 +1,15 @@
 function gen_plot2(sA, sT, k)
+% @Authors Gaetan Cassiers & Bruno Losseau
+% @Course LINMA1731 - PROJECT - UCL
+% @Date 12/05/16
+% INPUT :
+% sA, sT    cells containing arrows of variances, the parameters of the 
+%           problem
+% /!\ sA and sT must be of same length and contain same number of element 
+%     in each arrow
+% k         number of steps
+% OUTPUT :
+%           plots the results for question 2 of each arrow on a new figure
 
 n = length(sA);
 x = zeros(4, k, n);

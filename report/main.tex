@@ -18,16 +18,34 @@
 \begin{document}
 \maketitle
 
+%bricolage pour mettre les logos
+\vspace{-8.5cm}
+\begin{figure}[h!]
+\centering
+\begin{minipage}{.5\textwidth}
+  \includegraphics[width=.3\linewidth]{logo.jpg}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \flushright \hspace{-2cm}
+  \includegraphics[width=.55\linewidth]{epl-logo.jpg}
+\end{minipage}
+\end{figure}
+\vspace{4.5cm}
+%fin du bricolage
 
-\section*{Question 1}
+
+\tableofcontents
+
+%Q1
+\section{Basics}
 \subsection*{Deriving $\umatrix{F}$ and $\uvec{U}$}
 
 We start by studying the making a discretization of a movemement process in 1D, with the
-variable $x(t)$. If we denode $x_k = x(Tk)$ (with $T$ a given discretization step), we
+variable $x(t)$. If we denote $x_k = x(Tk)$ (with $T$ a given discretization step), we
 get
 \begin{align*}
     x_{k+1} &= x_k + T\dot{x}_k + \int_{Tk}^{T(k+1)}\int_{Tk}^{t}\ddot{x}(t)\dif t\dif t' \\
-    \dot{x}_{k+1} &=  \dot{x}_k + \int_{Tk}^{T(k+1)}\dot{x}(t)\dif t.
+    \dot{x}_{k+1} &=  \dot{x}_k + \int_{Tk}^{T(k+1)}\ddot{x}(t)\dif t.
 \end{align*}
 This is a simple discrete-time state model, if we consider that the terms which depends of $\ddot{x}$
 are an input signal.
@@ -51,7 +69,7 @@ the observer caused by the acceleration of the observer.
 \end{itemize}
 
 \subsection*{Deriving $h(\ubar{x})$}
-Following its definition given in the statement and unsing the notation $\uvec{x}(i)$
+Following its definition given in the statement and using the notation $\uvec{x}(i)$
 for the $i$-th element of the vector $\uvec{x}$:
 \begin{align*}
     h(\uvec{x}_k) &= \text{atan2}(\uvec{x}_k(1), \uvec{x}_k(2)) \\
@@ -64,22 +82,103 @@ for the $i$-th element of the vector $\uvec{x}$:
     \end{cases}
 \end{align*}
 
+%Q2
+\section{A simple model}
+At first, without implementing any command, it is asked to simulate the system for $k=200$ steps, changing
+the values of the variance $\sigma^2_{\theta}$ of the gausian noise on the bearing $w_k$  and
+the variance  $\sigma^2_a$ of the gausian noise on the acceleration $\epsilon_k$.
 
-\section*{Question 2}
+\subsection*{The code}
+All codes can be found in the section "\textbf{Codes Matlab}", page \pageref{codes}.\\
+The code used here is the function '\textsc{q2.m}'. To operate it with the proper
+parameters, plot and save the results one can launch the script '\textsc{plot\_q2.m}
+(it uses the function \textsc{gen\_plot2.m}).\\
+The outputs are the observed angle $\uvec{\theta}$ and the relative [position, speed]$'$
+matrix $\umatrix{x}$ for all steps $k$. \\
+For the initialisation, one sets $\uvec{x}_{k=0} = (1,1,1,1)'$ by default, its values are not decisive. \\
 
-Results for question 2:
+
+\subsection*{The results}
+%TODO (eventually) : pas top le newpage, seulement pour la mise en page...
+\newpage
+\begin{itemize}
+\item $\sigma_\theta=0$ and $\sigma_a=0$\\
+
+	\begin{minipage}{.5\textwidth}
+		\includegraphics[width=0.95\textwidth]{img/q2_1.eps}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		When there is no noise, one verifies that as the relative velocity is constant and there is no error on
+		the bearing, the angle is constant and the the relative position is linear.
+	\end{minipage}
+\item varying $\sigma_\theta$ with $\sigma_a=0$
 \begin{center}
-   \includegraphics[width=0.49\textwidth]{img/q2_1.eps}
-   \includegraphics[width=0.49\textwidth]{img/q2_2.eps}
-   \includegraphics[width=0.49\textwidth]{img/q2_3.eps}
-   \includegraphics[width=0.49\textwidth]{img/q2_4.eps}
+	\begin{minipage}{.5\textwidth}
+		\includegraphics[width=0.95\textwidth]{img/q2_2.eps}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		As the acceleration is by default equal to zero and that there is no noise on the acceleration, as the velocity is
+		constant, the trajectory is for all $\sigma_{\theta}$ the same. \\\\
+		Concerning the angle, the more we raise $\sigma_{\theta}$ the higher is the error on the angle.
+	\end{minipage}
 \end{center}
+\item varying $\sigma_a$ with $\sigma_\theta=0$
+\begin{center}
+	\begin{minipage}{.5\textwidth}
+		\includegraphics[width=0.95\textwidth]{img/q2_3.eps}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		The more the noise on the acceleration increases, the more the trajectory is impacted. \\\\
+		In this case, the bearing is also impacted, it seems logical as one has changed the state equations :
+		the noise on the acceleration does change the relative position, therefore modyfing the true bearing. \\\\
+		From these comments, one could explain the situation stating that $\sigma_a$ represents the change of 
+		acceleration of the target, that can not be predicted.
+	\end{minipage}
+\end{center}
+\item varying $\sigma_\theta$ proportionaly to $\sigma_a$
+\begin{center}
+	\begin{minipage}{.5\textwidth}
+   		\includegraphics[width=0.95\textwidth]{img/q2_4.eps}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		The higher $\sigma_a$ is set, the quicker the relative distance augments. Taking a look at the bearing,
+		the system seems to be stable, it doesn't exceed much the value of $\pi$. Considering the problem
+		it seems correct, there is no reason that the target would start circling arround the tracker. 
+	\end{minipage}
+\end{center}
+\item  Keeping $\sigma_\theta$ and $\sigma_a$ constant
+
+\begin{center}
+	\begin{minipage}{.5\textwidth}
+   		\includegraphics[width=0.95\textwidth]{img/q2_5.eps}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		One choose 	$\sigma_a=0.5$ to consider that the target is reasonably changing its acceleration, 
+		$\sigma_{\theta}=0.1$ supposing the error on the measure of the bearing is not too big. \\\\
+		With three simulations, one observes the randomness of the process.
+	\end{minipage}
+\end{center}
+\end{itemize}
 
 
-\section*{Question 3}
 
-Results for question 3:
-Histograms:
+%Q3
+\section{Building a sequential Monte Carlo algorithm}
+\subsection*{The code}
+For all the methods that use a Monte Carlo algorithm, one built a general function 
+'\textsc{particle\_filter.m}', based on the reference document given in the statement
+\footnote{A. Srivastava. Computational methods in statistics. Florida State University, 2009.
+\url{http://stat.fsu.edu/~anuj/pdf/classes/CompStatII10/BOOK.pdf}}.\\
+The main code used here is the function '\textsc{q3.m}' ; to employ it with the proper
+parameters, plot and save the results one can launch the script '\textsc{plot\_q3.m}'.
+
+\subsection*{The results}
+By ploting the histograms of the distribution of the points used in the Monte Carlo algorithm, 
+with $\sigma_a=0.1$ and $\sigma_{\theta}=0.1$, at the beginning (k=1) one has a gaussian
+distibution for both the X position and Y position. The more k augments, the less the
+distribution looks like a gaussian and the wider is its scope (1 when k=1, to 50 for k=200).
+This indicates that the quality of the estimation decreases when $k$ augments.
+
 \begin{center}
    \includegraphics[width=0.49\textwidth]{img/q3_hist_1.eps}
    \includegraphics[width=0.49\textwidth]{img/q3_hist_50.eps}
@@ -87,30 +186,99 @@ Histograms:
    \includegraphics[width=0.49\textwidth]{img/q3_hist_200.eps}
 \end{center}
 
-Path and estimated path:
-\begin{center}
-   \includegraphics[width=0.5\textwidth]{img/q3_path.eps}
-\end{center}
-
-\section*{Question 4}
-
-
-Results for question 3:
-Legend for positions: \includegraphics[width=0.2\textwidth]{img/q4_legend1.png}
-
-Legend for velocities: \includegraphics[width=0.2\textwidth]{img/q4_legend2.png}
 
 \begin{center}
-   \includegraphics[width=0.49\textwidth]{img/q4_1.png}
-   \includegraphics[width=0.49\textwidth]{img/q4_2.png}
-   \includegraphics[width=0.49\textwidth]{img/q4_3.png}
-   \includegraphics[width=0.49\textwidth]{img/q4_15.png}
-   \includegraphics[width=0.49\textwidth]{img/q4_26.png}
+	\begin{minipage}{.6\textwidth}
+		\includegraphics[width=0.95\textwidth]{img/q3_path.eps}
+	\end{minipage}%
+	\begin{minipage}{.4\textwidth}
+		Plotting the real vs. the estimated position and indicating with dots the (X,Y) of the 
+		different histograms (k=1,50,100,200),one sees that the more $k$ augments
+		the farthest the estimation is from the real position. Yet the estimation is close
+		to the true position after $200$ steps. In the following one will limit the number
+		of steps to $k=26$. One can state that the results obtained with the Monte
+		Carlo method seem consistent for this number of steps.
+	\end{minipage}
 \end{center}
+  
+%Q4
+\section{Applying the Monte Carlo algorithm to an artificial submarine 
+tracking problem}
+\subsection*{The code}
+As the fourth and fifth questions are both established on applying the algorithm developed in question
+3 to the submarine tracking problem, one decided to group the main code for questions 4 and 5
+in the function '\textsc{q45.m}'. In the present case, to use it with the proper parameters, plot
+and save the results one can launch the script '\textsc{plot\_q4.m}'.\\
+\subsection*{The results}
+To introduce the results, one uses the following legends\\
+
+	\begin{minipage}{.5\textwidth}
+		\flushleft For the positions :\\
+		 \center\includegraphics[width=4cm]{img/q4_legend1.png}
+	\end{minipage}%
+	\begin{minipage}{.3\textwidth}
+		For the velocities :\\
+		 \center\includegraphics[width=4cm]{img/q4_legend2.png}
+	\end{minipage}
+
+\begin{itemize}
+\item The position\\
+At the first step, the pre and post resampling clouds of points are forming a line, almost
+the same. The center of gravity of the post resampling cloud is the estimated position
+of the target.\\
+At the second step, the pre resampling cloud forms a circle (distorted on the graph). 
+The post resampling forms a line that estimates well the position of the target.\\
+At the third step, the clouds seem to be already more concentrated around
+the estimated positions. One can worry about the diversity of the points.\\
+When $k=15$, the clouds form a line. They seem to be concentrated one
+on top of the other. When one looks at the estimated position, the result
+is not convincing. \\
+In the end, even though one has some trouble with the predictions, the result
+when $k=26$ is not much far from the real position.\\
+One can wonder why such an error on the trajectory was not predicted in
+section 3.
+
+\item The velocitie\\
+At the begining, one has a nice variety of points for the pre and post
+resampling, they are (almost) all located in a circle of radius 1.
+When k=2, the area where are located the pre resampling points is wide whilst
+the area where are found the post resampling points is very narrow. From there, 
+this area keeps narrowing. When k=26, the radius of the circle is only 0.03.
+
+\item Conclusion\\
+The results could be considered all right yet Monte Carlo method is loosing all its interest
+for its core element (the generated cloud of points) is quickly loosing its
+consistancy. One will improve the method in the next question!
+\end{itemize} 
 
 
-\section*{Question 5}
+\begin{center}
+	\begin{minipage}{.5\textwidth}
+		 \includegraphics[width=.98\textwidth]{img/q4_1.png}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		\includegraphics[width=0.98\textwidth]{img/q4_2.png}
+	\end{minipage}
+\end{center}
+  \begin{center}
+	\begin{minipage}{.5\textwidth}
+   		\includegraphics[width=0.98\textwidth]{img/q4_3.png}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		 \includegraphics[width=0.98\textwidth]{img/q4_15.png}
+	\end{minipage}
+\end{center}
+  \begin{center}
+		 \includegraphics[width=0.5\textwidth]{img/q4_26.png}
+\end{center}
+  
 
+
+\section{Improving the results using a post-regularised sequential
+Monte Carlo method}
+\subsection*{The code}
+
+\subsection*{The results}
 Results for question 5, part 1:
 \begin{center}
    \includegraphics[width=0.6\textwidth]{img/q51.eps}
@@ -121,11 +289,29 @@ Results for question 5, part 2:
    \includegraphics[width=0.6\textwidth]{img/q52.eps}
 \end{center}
 
-\section*{Question 6}
+\section{Question 6}
 
 
-\section*{Codes matlab}
+
+\newpage
+\section{Matlab codes}
+\label{codes}
+\appendix
+\section*{Question 2}
 \lstinputlisting{../matlab/q2.m}
-
-
+\lstinputlisting{../matlab/plot_q2.m}
+\lstinputlisting{../matlab/gen_plot2.m}
+\section*{General Monte Carlo method}
+\lstinputlisting{../matlab/particle_filter.m}
+\section*{Question 3}
+\lstinputlisting{../matlab/q3.m}
+\lstinputlisting{../matlab/plot_q3.m}
+\section*{Solving the submarine tracking problem}
+\lstinputlisting{../matlab/q4q5.m}
+\section*{Question 4}
+\lstinputlisting{../matlab/plot_q4.m}
+\section*{Question 5}
+\lstinputlisting{../matlab/plot_q5.m}
+\lstinputlisting{../matlab/gen_plot5.m}
+\section*{Question 6}
 \end{document}
