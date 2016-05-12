@@ -4,7 +4,8 @@ question = 'q51';
 disp(['Results for question : ', question])
 % global variables
 load data.mat
-load data2.mat
+T = 1;
+[F, Gamma, n] = gen_parameters(T);
 s_r = 0.1;
 s_T = 1e-4;
 s_speed = 0.1;

@@ -18,7 +18,8 @@ function [x, xt_estimated, xt_post_resampling] = q3(sA, sT, k)
 %                       and resampling for signal x
 
 % Information given from the statement and previous questions
-load data2.mat;
+T = 0.5;
+[F, Gamma, ~] = gen_parameters(T);
 x0 = [1 1 1 1]';
 
 % 0/ Compute the true position and bearing

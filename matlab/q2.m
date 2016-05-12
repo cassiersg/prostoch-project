@@ -15,7 +15,8 @@ function [x, z] = q2(sA, sT, k)
 %   x 4*k matrix containing the predicted position and speed
 %   z 1*k vector containing the predicted bearing angle
 
-load data2.mat;
+T = 0.5;
+[F, Gamma, ~] = gen_parameters(T);
 
 x0 = [1 1 1 1]';
 x = zeros(4,k);

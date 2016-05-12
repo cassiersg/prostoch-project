@@ -30,7 +30,8 @@ function [xt_estimated, xt_pre_resampling, xt_post_resampling, n_diff] =...
 
 % Parameters defining the submarine-tracking problem
 load data.mat;
-load data2.mat;
+T = 1;
+[F, Gamma, n] = gen_parameters(T);
 s_r = 0.1;
 s_theta = 1e-4;
 s_speed = 0.1;
