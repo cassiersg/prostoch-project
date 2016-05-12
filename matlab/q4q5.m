@@ -1,5 +1,5 @@
 function [xt_estimated, xt_pre_resampling, xt_post_resampling, n_diff] =...
-    q4q5(filtering, sA, n_min)
+    q4q5(filtering, s_a, n_min)
 % @Authors Gaetan Cassiers & Bruno Losseau
 % @Course LINMA1731 - PROJECT - UCL
 % @Date 12/05/16
@@ -14,7 +14,7 @@ function [xt_estimated, xt_pre_resampling, xt_post_resampling, n_diff] =...
 %               'postRPF':  post regularized particle filter (new particles
 %               are taken from a continuous density derived from old 
 %               particles)
-%   sA      variance of the noise linked to the process noise vector
+%   s_a      variance of the noise linked to the process noise vector
 %   n_min   minimum effective number of particles needed. The algorithm
 %           performs resampling if the effective number of particles is less
 %           than n_min.
@@ -47,7 +47,7 @@ xk = [...
     speed_init .* cos(course_init);
     speed_init .* sin(course_init)];
 likelihood = @(t, p)normpdf(measurements(t) - atan2(p(1,:)-observer(1,t), p(2,:)-observer(2,t)), 0, sqrt(s_theta));
-gen_next = @(t, p)F*p+Gamma*normrnd(0, sqrt(sA), 2, n);
+gen_next = @(t, p)F*p+Gamma*normrnd(0, sqrt(s_a), 2, n);
 [xt_estimated, xt_pre_resampling, xt_post_resampling,n_diff] = particle_filter(...
     xk, likelihood, gen_next, length(measurements), n_min, filtering);
 end
