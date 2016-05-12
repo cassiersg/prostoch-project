@@ -6,8 +6,7 @@ function [xt_estimated, xt_pre_resampling, xt_post_resampling, n_diff] =...
 % Q4Q5 simulates the system and the observation process for the artificial 
 % submarine tracking problem initialised with 'data.m'. 
 % To plot the relative positions and the measured angles at each step, 
-% depending on the question, use the files PLOTS_Q4.M, PLOTS_Q51.M,
-% PLOTS_Q52.M
+% depending on the question, use the files PLOT_Q4.M and PLOT_Q5.M.
 % INPUT :
 %   filtering   mode of resampling
 %               'SIR':  sampling / importance resampling (new particles are 

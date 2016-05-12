@@ -2,6 +2,7 @@
 % @Course LINMA1731 - PROJECT - UCL
 % @Date 12/05/16
 % Script that computes  and plots the results for question 3.
+
 k = 201; % As it is asked to go 200 steps ahead and k=1 is given.
 
 sA = 0.01;
@@ -29,7 +30,6 @@ plot(x(1,:),x(2,:),'*',xt_estimated(1,:),xt_estimated(2,:),'*','MarkerSize',1);
 hold on
 plot(x(1,t),x(2,t),'b*',xt_estimated(1,t),xt_estimated(2,t),'r*');
 legend({'real', 'estimated'}, 'Location', 'best');
-
 
 xlabel('X');
 ylabel('Y');

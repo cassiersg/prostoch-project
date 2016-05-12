@@ -1,4 +1,5 @@
-function [x_est, x_pre, x_post,n_diff] = particle_filter(x_init, likelihood, gen_next, t_max, n_min, resampling)
+function [x_est, x_pre, x_post,n_diff] =...
+    particle_filter(x_init, likelihood, gen_next, t_max, n_min, resampling)
 % @Authors Gaetan Cassiers & Bruno Losseau
 % @Course LINMA1731 - PROJECT - UCL
 % @Date 12/05/16

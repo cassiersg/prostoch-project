@@ -2,13 +2,10 @@
 % @Course LINMA1731 - PROJECT - UCL
 % @Date 12/05/16
 % % Script that computes  and plots the results for question 4.
-n_min = +Inf;
-filtering = 'SIR';
-sA = 1e-6;
+
 T = 1;
         
-[xt_estimated, xt_pre_resampling, xt_post_resampling, n_diff] =...
-    q4q5(filtering, sA, n_min);
+[xt_estimated, xt_pre_resampling, xt_post_resampling, n_diff] = q4();
 
 load data.mat
 target_velocities = diff([target, 2*target(:,end) - target(:,end-1)]')'/T;
@@ -32,6 +29,6 @@ for k = [1, 2, 3, 15, 26]
     title(sprintf('k = %i, velocities', k));
 %    legend({'pre resampling', 'post resampling', 'true (almost)'}, 'Location', 'best');
     tightfig();
-    saveas(gcf, sprintf('Results6++/q4_%i.png', k), 'png');
+    saveas(gcf, sprintf('Results/q4_%i.png', k), 'png');
     close(f);
 end

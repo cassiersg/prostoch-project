@@ -1,10 +1,7 @@
 % q6
 load data.mat;
 T = .5;
-F = [1 0 T 0;
-     0 1 0 T;
-     0 0 1 0;
-     0 0 0 1];
+[F, Gamma, n] = gen_parameters(T);
 s_r = 0.1;
 s_theta = 1e-4;
 s_speed = 0.1;
@@ -41,12 +38,6 @@ CRLBrms = squeeze(sqrt(Jinv(1,1,:)+Jinv(2,2,:)))';
 % computation of the eaxact and estimated relative position USING Q5
 xt_exact = target-observer;
 sA = 0;
-T2 = T^2/2;
-Gamma = [T2 0;
-         0 T2;
-         T 0;
-         0 T];
-n = 5000;
 r_init = normrnd(r, sqrt(s_r), 1, n);
 th_init = normrnd(theta, sqrt(s_theta), 1, n);
 speed_init = normrnd(s, sqrt(s_speed), 1, n);
