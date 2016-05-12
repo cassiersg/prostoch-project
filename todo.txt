@@ -1,4 +1,15 @@
 
+Ajouter fichiers q4 & q5
+
+Page de garde
+
+1er graphe à retirer
+inverser ordre plots même graphe
+\texttt
+
+figure q4
+
+
 Standardiser et les notations pour les variances/écarts-types dans les codes (sT versus s_theta, écart-type vs variance).
 Convert data2.mat to ascii
 
