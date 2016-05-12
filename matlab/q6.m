@@ -18,8 +18,9 @@ s_t = 1e-4;
 s_speed = 0.1;
 s_course = 0.1;
 k_max = length(target(1,:));
-dist = target(1,:).^2 + target(2,:).^2;
-H = [target(2,:)./dist; -target(1,:)./dist; zeros(2,k_max)];
+rel_pos = target - observer;
+dist = rel_pos(1,:).^2 + rel_pos(2,:).^2;
+H = [rel_pos(2,:)./dist; -rel_pos(1,:)./dist; zeros(2,k_max)];
 
 % computation of the CRLB for each position
 Pxx = r^2*s_t*cos(theta)^2 + s_r*sin(theta)^2;
@@ -42,7 +43,6 @@ Jinv(:,:,1) = P1;
 Finv = inv(F);
 for i = 2:k_max
     J(:,:,i) = Finv'*J(:,:,i-1)*Finv + 1/s_t*H(:,i)*H(:,i)';
-    disp(1/s_t*H(:,i)*H(:,i)')
     Jinv(:,:,i) = inv(J(:,:,i));
 end
 CRLBrms = squeeze(sqrt(Jinv(1,1,:)+Jinv(2,2,:)))';

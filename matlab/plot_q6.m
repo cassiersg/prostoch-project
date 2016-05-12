@@ -6,7 +6,7 @@
 [CRLBrms, RMS] = q6();
 k_max = length(RMS);
 f = figure('Name','q6 : CRLB and RMS error considering relative position');
-plot(1:k_max,CRLBrms,'.',1:k_max,RMS,'.');
+plot(1:k_max,CRLBrms,'x-.',1:k_max,RMS,'x-.');
 legend({'CRLB','RMS error'}, 'Location', 'northwest');
 saveas(f, sprintf('Results/q6.png'));
-%close(f);
+close(f);
