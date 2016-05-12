@@ -1,7 +1,8 @@
 
 Standardiser et les notations pour les variances/écarts-types dans les codes (sT versus s_theta, écart-type vs variance).
+Convert data2.mat to ascii
 
 Bruno 12/05 09h30:
 - Le code est "propre" question 5 incluse. Je n'ai pas regardé pour la q6. Je propose qu'on envoie tout les codes avec
 un main qui produit les résultats et les sauve en png dans le folder des codes.
-- J'ai fini "d'analyser" les résultats jusqu'Ã  la question 5 (non incluse) : j'en avait un peu marre hier soir!
+- J'ai fini "d'analyser" les résultats jusqu'à la question 5 (non incluse) : j'en avait un peu marre hier soir!
