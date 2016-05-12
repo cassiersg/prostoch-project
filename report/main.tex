@@ -1,4 +1,5 @@
-\documentclass[english,DIV=13]{scrartcl}
+\documentclass[english,DIV=13]{scrreprt}
+%\documentclass[english,DIV=13]{scrartcl}
 
 \input{lib.tex}
 
@@ -12,33 +13,23 @@
 \subject{LINMA 1731 --- Stochastic processes}
 \title{Bearings-only tracking problem}
 \subtitle{}
-\author{\textsc{Cassiers} Gaëtan \and \textsc{Losseau} Bruno}
+\author{\begin{tabular}{cc}
+	\textsc{Cassiers} Gaëtan  & 	$33741300$ \\
+	\textsc{Losseau} Bruno 	&	$33741300$
+	 \end{tabular}}
 \date{\today}
+\publishers{}
 
 \begin{document}
 \maketitle
 
-%bricolage pour mettre les logos
-\vspace{-8.5cm}
-\begin{figure}[h!]
-\centering
-\begin{minipage}{.5\textwidth}
-  \includegraphics[width=.3\linewidth]{logo.jpg}
-\end{minipage}%
-\begin{minipage}{.5\textwidth}
-  \flushright \hspace{-2cm}
-  \includegraphics[width=.55\linewidth]{epl-logo.jpg}
-\end{minipage}
-\end{figure}
-\vspace{4.5cm}
-%fin du bricolage
-
 
 \tableofcontents
 
+
 %Q1
-\section{Basics}
-\subsection*{Deriving $\umatrix{F}$ and $\uvec{U}$}
+\chapter{Basics}
+\section*{Deriving $\umatrix{F}$ and $\uvec{U}$}
 
 We start by studying the making a discretization of a movemement process in 1D, with the
 variable $x(t)$. If we denote $x_k = x(Tk)$ (with $T$ a given discretization step), we
@@ -68,7 +59,7 @@ acceleration of the target,
 the observer caused by the acceleration of the observer.
 \end{itemize}
 
-\subsection*{Deriving $h(\ubar{x})$}
+\section*{Deriving $h(\ubar{x})$}
 Following its definition given in the statement and using the notation $\uvec{x}(i)$
 for the $i$-th element of the vector $\uvec{x}$:
 \begin{align*}
@@ -83,96 +74,79 @@ for the $i$-th element of the vector $\uvec{x}$:
 \end{align*}
 
 %Q2
-\section{A simple model}
+\chapter{Simple model}
 At first, without implementing any command, it is asked to simulate the system for $k=200$ steps, changing
 the values of the variance $\sigma^2_{\theta}$ of the gausian noise on the bearing $w_k$  and
 the variance  $\sigma^2_a$ of the gausian noise on the acceleration $\epsilon_k$.
 
-\subsection*{The code}
-All codes can be found in the section "\textbf{Codes Matlab}", page \pageref{codes}.\\
-The code used here is the function '\textsc{q2.m}'. To operate it with the proper
-parameters, plot and save the results one can launch the script '\textsc{plot\_q2.m}
-(it uses the function \textsc{gen\_plot2.m}).\\
-The outputs are the observed angle $\uvec{\theta}$ and the relative [position, speed]$'$
-matrix $\umatrix{x}$ for all steps $k$. \\
-For the initialisation, one sets $\uvec{x}_{k=0} = (1,1,1,1)'$ by default, its values are not decisive. \\
+\section*{Code}
+For each chapter, one only presents the code that is strictly relevant. The scripts and functions 
+used to plot the required results (herein \texttt{plot\_q2.m} and \texttt{gen\_plot2.m})
+can be found in the linked archive. To obtain the results for all the questions, simply launch
+the script \texttt{main.m}.\\
 
+\lstinputlisting[caption={Simulating the system}]{../matlab/q2.m}
 
-\subsection*{The results}
-%TODO (eventually) : pas top le newpage, seulement pour la mise en page...
-\newpage
+Every time a code uses a parameter given in the statement, it calls the following function : 
+\lstinputlisting[caption={Parameters given in the statement}]{../matlab/gen_parameters.m}
+
+\section*{Results}
 \begin{itemize}
-\item $\sigma_\theta=0$ and $\sigma_a=0$\\
-
-	\begin{minipage}{.5\textwidth}
-		\includegraphics[width=0.95\textwidth]{img/q2_1.eps}
-	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
-		When there is no noise, one verifies that as the relative velocity is constant and there is no error on
-		the bearing, the angle is constant and the the relative position is linear.
-	\end{minipage}
 \item varying $\sigma_\theta$ with $\sigma_a=0$
-\begin{center}
-	\begin{minipage}{.5\textwidth}
-		\includegraphics[width=0.95\textwidth]{img/q2_2.eps}
-	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
-		As the acceleration is by default equal to zero and that there is no noise on the acceleration, as the velocity is
-		constant, the trajectory is for all $\sigma_{\theta}$ the same. \\\\
-		Concerning the angle, the more we raise $\sigma_{\theta}$ the higher is the error on the angle.
-	\end{minipage}
+\begin{center}	
+\includegraphics[width=0.66\textwidth]{img/q2_1.eps}
 \end{center}
+When there is no noise, one verifies that as the relative velocity is constant and there is no error on
+the bearing, the angle is constant and the the relative position is linear.\\
+As the acceleration is by default equal to zero and that there is no noise on the acceleration, as the velocity is
+constant, the trajectory is for all $\sigma_{\theta}$ the same.\\
+Concerning the angle, the more we raise $\sigma_{\theta}$ the higher the error on the angle is.
+
 \item varying $\sigma_a$ with $\sigma_\theta=0$
 \begin{center}
-	\begin{minipage}{.5\textwidth}
-		\includegraphics[width=0.95\textwidth]{img/q2_3.eps}
-	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
-		The more the noise on the acceleration increases, the more the trajectory is impacted. \\\\
-		In this case, the bearing is also impacted, it seems logical as one has changed the state equations :
-		the noise on the acceleration does change the relative position, therefore modyfing the true bearing. \\\\
-		From these comments, one could explain the situation stating that $\sigma_a$ represents the change of 
-		acceleration of the target, that can not be predicted.
-	\end{minipage}
+\includegraphics[width=0.66\textwidth]{img/q2_2.eps}
 \end{center}
+The more the noise on the acceleration increases, the more the trajectory is impacted. \\
+In this case, the bearing is also impacted, it seems logical as one has changed the state equations :
+the noise on the acceleration does change the relative position, therefore modyfing the true bearing. \\
+From these comments, one could explain the situation stating that $\sigma_a$ represents the change of 
+acceleration of the target, that can not be predicted. The change of acceleration induces a change
+of position, therefrom a change on the bearing.
+
+
 \item varying $\sigma_\theta$ proportionaly to $\sigma_a$
 \begin{center}
-	\begin{minipage}{.5\textwidth}
-   		\includegraphics[width=0.95\textwidth]{img/q2_4.eps}
-	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
-		The higher $\sigma_a$ is set, the quicker the relative distance augments. Taking a look at the bearing,
-		the system seems to be stable, it doesn't exceed much the value of $\pi$. Considering the problem
-		it seems correct, there is no reason that the target would start circling arround the tracker. 
-	\end{minipage}
+\includegraphics[width=0.66\textwidth]{img/q2_3.eps}
 \end{center}
+The higher $\sigma_a$ is set, the quicker the relative distance augments. Taking a look at the bearing,
+the system seems to be stable, it doesn't exceed much the value of $\pi$. Considering the problem
+it seems correct, there is no reason that the target would start circling arround the tracker. 
+
 \item  Keeping $\sigma_\theta$ and $\sigma_a$ constant
 
 \begin{center}
-	\begin{minipage}{.5\textwidth}
-   		\includegraphics[width=0.95\textwidth]{img/q2_5.eps}
-	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
-		One choose 	$\sigma_a=0.5$ to consider that the target is reasonably changing its acceleration, 
-		$\sigma_{\theta}=0.1$ supposing the error on the measure of the bearing is not too big. \\\\
-		With three simulations, one observes the randomness of the process.
-	\end{minipage}
+ \includegraphics[width=0.66\textwidth]{img/q2_4.eps}
 \end{center}
+One choose 	$\sigma_a=0.5$ to consider that the target is reasonably changing its acceleration, 
+$\sigma_{\theta}=0.1$ supposing the error on the measure of the bearing is not "too large". \\
+With three simulations, one observes the randomness of the process.
 \end{itemize}
 
 
 
 %Q3
-\section{Building a sequential Monte Carlo algorithm}
-\subsection*{The code}
+\chapter{Building a sequential Monte Carlo algorithm}
+\section*{Code}
 For all the methods that use a Monte Carlo algorithm, one built a general function 
-'\textsc{particle\_filter.m}', based on the reference document given in the statement
+\texttt{particle\_filter.m}, based on the reference document given in the statement
 \footnote{A. Srivastava. Computational methods in statistics. Florida State University, 2009.
 \url{http://stat.fsu.edu/~anuj/pdf/classes/CompStatII10/BOOK.pdf}}.\\
-The main code used here is the function '\textsc{q3.m}' ; to employ it with the proper
-parameters, plot and save the results one can launch the script '\textsc{plot\_q3.m}'.
-
-\subsection*{The results}
+\lstinputlisting[caption={General Monte Carlo algorithm}]{../matlab/particle_filter.m}
+The main code used here is the function \texttt{q3.m} (to employ it with the proper
+parameters, plot and save the results one can launch the script \texttt{plot\_q3.m}).
+\newpage
+\lstinputlisting[caption={Comparing the results with Monte Carlo algorithm and the model}]{../matlab/q3.m}
+\section*{Results}
 By ploting the histograms of the distribution of the points used in the Monte Carlo algorithm, 
 with $\sigma_a=0.1$ and $\sigma_{\theta}=0.1$, at the beginning (k=1) one has a gaussian
 distibution for both the X position and Y position. The more k augments, the less the
@@ -193,23 +167,23 @@ This indicates that the quality of the estimation decreases when $k$ augments.
 	\end{minipage}%
 	\begin{minipage}{.4\textwidth}
 		Plotting the real vs. the estimated position and indicating with dots the (X,Y) of the 
-		different histograms (k=1,50,100,200),one sees that the more $k$ augments
-		the farthest the estimation is from the real position. Yet the estimation is close
-		to the true position after $200$ steps. In the following one will limit the number
+		different histograms (k=1,50,100,200), one sees that the more $k$ augments
+		the further the estimation is from the real position. Yet the estimation is "not that far"
+		from the true position after $200$ steps. In the following sections, one will limit the number
 		of steps to $k=26$. One can state that the results obtained with the Monte
-		Carlo method seem consistent for this number of steps.
+		Carlo method seem consistent for this limited number of steps.
 	\end{minipage}
 \end{center}
   
 %Q4
-\section{Applying the Monte Carlo algorithm to an artificial submarine 
+\chapter{Applying the Monte Carlo algorithm to an artificial submarine 
 tracking problem}
-\subsection*{The code}
+\section*{Code}
 As the fourth and fifth questions are both established on applying the algorithm developed in question
 3 to the submarine tracking problem, one decided to group the main code for questions 4 and 5
 in the function '\textsc{q45.m}'. In the present case, to use it with the proper parameters, plot
 and save the results one can launch the script '\textsc{plot\_q4.m}'.\\
-\subsection*{The results}
+\section*{Results}
 To introduce the results, one uses the following legends\\
 
 	\begin{minipage}{.5\textwidth}
@@ -274,11 +248,11 @@ consistancy. One will improve the method in the next question!
   
 
 
-\section{Improving the results using a post-regularised sequential
+\chapter{Improving the results using a post-regularised sequential
 Monte Carlo method}
-\subsection*{The code}
+\section*{Code}
 
-\subsection*{The results}
+\section*{Results}
 Results for question 5, part 1:
 \begin{center}
    \includegraphics[width=0.6\textwidth]{img/q51.eps}
@@ -289,29 +263,27 @@ Results for question 5, part 2:
    \includegraphics[width=0.6\textwidth]{img/q52.eps}
 \end{center}
 
-\section{Question 6}
+\chapter{Question 6}
 
 
 
 \newpage
-\section{Matlab codes}
+\chapter{Matlab codes}
 \label{codes}
 \appendix
-\section*{Question 2}
-\lstinputlisting{../matlab/q2.m}
+\chapter*{Question 2}
 \lstinputlisting{../matlab/plot_q2.m}
 \lstinputlisting{../matlab/gen_plot2.m}
-\section*{General Monte Carlo method}
-\lstinputlisting{../matlab/particle_filter.m}
-\section*{Question 3}
+\chapter*{General Monte Carlo method}
+\chapter*{Question 3}
 \lstinputlisting{../matlab/q3.m}
 \lstinputlisting{../matlab/plot_q3.m}
-\section*{Solving the submarine tracking problem}
+\chapter*{Solving the submarine tracking problem}
 \lstinputlisting{../matlab/q4q5.m}
-\section*{Question 4}
+\chapter*{Question 4}
 \lstinputlisting{../matlab/plot_q4.m}
-\section*{Question 5}
+\chapter*{Question 5}
 \lstinputlisting{../matlab/plot_q5.m}
 \lstinputlisting{../matlab/gen_plot5.m}
-\section*{Question 6}
+\chapter*{Question 6}
 \end{document}
