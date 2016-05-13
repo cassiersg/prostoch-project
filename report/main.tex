@@ -204,42 +204,28 @@ To introduce the results, one uses the following legends\\
 
 \begin{itemize}
 \item $k=1$\\
-The distribution of the speed particles corresponds to the initial distribution ($k=0$) : as one doesn't have yet 2 measures 
-of position of the target, it cannot estimate properly 
+The distribution of the velocity particles corresponds to the initial distribution ($k=0$) : as one doesn't have yet 2 measures 
+of position of the target, it cannot estimate properly the velocity, the clouds have a large scope.\\
 Concerning the cloud of position particles, as one doesn't know the distance but only the bearing, it forms a shape
 that is close to a line. One can easily check by extending the "line" to the initial position of the observer that it 
-follows the bearing.
+follows the bearing.\\
+There is no big difference between the pre resampling and the post-resampling because the initial distribution already corresponds
+to the observation that is made.\\
+The position and the velocity clouds are not influenced one by another : they mainly depend of the distributions that were
+used to generate them at the begininng.
+
+\item $k=2$\\
+The pre-resampling position is now affected by the velocity cloud of the previous step : each pre-resampling particle position
+at $k=2$ is equal to the positon at $k=1$ to which is added the velocity at $k=1$ times the time step, therefrom the cloud forms
+a circle-shape. As one knows the bearing (with a small error indeed), the observations makes the post-resampling cloud
+in a shape that is again close to a line. Compared to $k=1$ the scope of the line is narrowed. \\
+As for the velocity clouds, the pre-resampling is close to the post-resampling at $k=1$. Now that one disposes of two positions,
+the velocity can be better identified : the cloud is shrinked. \\
+At this step, velocity and position have affected one another.
 
 
 
-\item The position\\
-At the first step, the pre and post resampling clouds of points are forming a line, almost
-the same. The center of gravity of the post resampling cloud is the estimated position
-of the target.\\
-At the second step, the pre resampling cloud forms a circle (distorted on the graph). 
-The post resampling forms a line that estimates well the position of the target.\\
-At the third step, the clouds seem to be already more concentrated around
-the estimated positions. One can worry about the diversity of the points.\\
-When $k=15$, the clouds form a line. They seem to be concentrated one
-on top of the other. When one looks at the estimated position, the result
-is not convincing. \\
-In the end, even though one has some trouble with the predictions, the result
-when $k=26$ is not much far from the real position.\\
-One can wonder why such an error on the trajectory was not predicted in
-section 3.
 
-\item The velocitie\\
-At the begining, one has a nice variety of points for the pre and post
-resampling, they are (almost) all located in a circle of radius 1.
-When k=2, the area where are located the pre resampling points is wide whilst
-the area where are found the post resampling points is very narrow. From there, 
-this area keeps narrowing. When k=26, the radius of the circle is only 0.03.
-
-\item Conclusion\\
-The results could be considered all right yet Monte Carlo method is loosing all its interest
-for its core element (the generated cloud of points) is quickly loosing its
-consistancy. One will improve the method in the next question!
-\end{itemize} 
 
 
 \begin{center}
@@ -250,6 +236,16 @@ consistancy. One will improve the method in the next question!
 		\includegraphics[width=0.98\textwidth]{img/q4_2.png}
 	\end{minipage}
 \end{center}
+\item $k=3$\\
+Concerning the position, one can observe that the post-resampling cloud is translated following the course of the target compared
+to the pre-resampling cloud. Also, the bearing is increasing.\\
+As for the velocity, the particle cloud stays narrow for both the pre and post-resampling.
+
+\item $k=15$\\
+The position of the observer is especial : it has just changed its direction. Concerning the bearing,
+it has changed sign. The clouds are properly oriented, in accordance with the bearing.\\
+The velocity clouds are converging : compared to $k=3$ the range of the particles is divided by a factor of order 10.
+
   \begin{center}
 	\begin{minipage}{.5\textwidth}
    		\includegraphics[width=0.98\textwidth]{img/q4_3.png}
@@ -258,15 +254,28 @@ consistancy. One will improve the method in the next question!
 		 \includegraphics[width=0.98\textwidth]{img/q4_15.png}
 	\end{minipage}
 \end{center}
+\item $k=26$\\
+In the end, one still has a line shape for the pre and post-resampling clouds, its length hasn't much decreased
+since $k=3$. This is still due to the fact that one has the observation on the bearing but not on the distance.
+Hence the bearing is still correct.\\
+Since $k=15$, there hasn't been any improvement in the range of the velocity clouds.
+
   \begin{center}
 		 \includegraphics[width=0.5\textwidth]{img/q4_26.png}
 \end{center}
   
 
+\end{itemize} 
 
 \chapter{Improving the results using a post-regularised sequential
 Monte Carlo method}
 \section*{Code}
+As the fourth and fifth questions are both established on applying the algorithm~\ref{MonteCarlo}
+to the submarine tracking problem, one decided to group the main code for questions 4 and 5
+in the function \texttt{q45.m}.\\
+To call \texttt{q4q5} \ref{q4q5} in the present case, one should use \texttt{q5.m} (to use it with the proper parameters,
+plot and save the results one can launch the script \texttt{plot\_q5.m}).\\
+%\lstinputlisting[caption={The artificial submarine tracking problem initialised with 'data.m'}]{../matlab/q5.m}
 
 \section*{Results}
 Results for question 5, part 1:
@@ -280,16 +289,10 @@ Results for question 5, part 2:
 \end{center}
 
 \chapter{Question 6}
+\section*{Code}
 
 
+\section*{Results}
 
-\newpage
-\chapter*{Solving the submarine tracking problem}
-\lstinputlisting{../matlab/q4q5.m}
-\chapter*{Question 4}
-\lstinputlisting{../matlab/plot_q4.m}
-\chapter*{Question 5}
-\lstinputlisting{../matlab/plot_q5.m}
-\lstinputlisting{../matlab/gen_plot5.m}
-\chapter*{Question 6}
+
 \end{document}
