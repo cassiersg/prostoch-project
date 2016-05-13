@@ -38,7 +38,8 @@ get
     x_{k+1} &= x_k + T\dot{x}_k + \int_{Tk}^{T(k+1)}\int_{Tk}^{t}\ddot{x}(t)\dif t\dif t' \\
     \dot{x}_{k+1} &=  \dot{x}_k + \int_{Tk}^{T(k+1)}\ddot{x}(t)\dif t.
 \end{align*}
-This is a simple discrete-time state model, if we consider that the terms which depends of $\ddot{x}$
+This is a simple discrete-time state model, if we consider that the terms which depends of
+the integral of $\ddot{x}$
 are an input signal.
 We can generalize this equation to the relative state vector $\uvec{x} = \uvec{x}^t - \uvec{x}^o$:
 \[\uvec{x}_{k+1} = \umatrix{F}\uvec{x}_k - \uvec{U}_{k,k+1} + \uvec{\epsilon}_k\]
@@ -100,7 +101,7 @@ When there is no noise, one verifies that as the relative velocity is constant a
 the bearing, the angle is constant and the the relative position is linear.\\
 As the acceleration is by default equal to zero and that there is no noise on the acceleration, as the velocity is
 constant, the trajectory is for all $\sigma_{\theta}$ the same.\\
-Concerning the angle, the more we raise $\sigma_{\theta}$ the higher the error on the angle is.
+Concerning the angle, the more we raise $\sigma_{\theta}$ the higher the error on the mesured angle is.
 
 \item varying $\sigma_a$ with $\sigma_\theta=0$
 \begin{center}
@@ -119,16 +120,17 @@ of position, therefrom a change on the bearing.
 \includegraphics[width=0.66\textwidth]{img/q2_3.eps}
 \end{center}
 The higher $\sigma_a$ is set, the quicker the relative distance augments. Taking a look at the bearing,
-the system seems to be stable, it doesn't exceed much the value of $\pi$. Considering the problem
-it seems correct, there is no reason that the target would start circling arround the tracker. 
+        we observe two trends: a slow (low frequency) variation, due to the acceleration of the target
+         (which is integrated twice to get the bearing, therefore the variations are slow), and 
+         a high frequency variation due to the measurement errors (that are adding a white noise).
 
 \item  Keeping $\sigma_\theta$ and $\sigma_a$ constant
 
 \begin{center}
  \includegraphics[width=0.66\textwidth]{img/q2_4.eps}
 \end{center}
-One choose 	$\sigma_a=0.5$ to consider that the target is reasonably changing its acceleration, 
-$\sigma_{\theta}=0.1$ supposing the error on the measure of the bearing is not "too large". \\
+When $\sigma_a=0.5$ we observe that the target motion changes reasonably slowly, and
+with $\sigma_{\theta}=0.1$ the mesurement noise is not adding too much uncertainty on the bearing. \\
 With three simulations, one observes the randomness of the process.
 \end{itemize}
 
@@ -174,8 +176,7 @@ This indicates that the quality of the estimation decreases when $k$ augments.
 		reason the distance is quite approximative.
 	\end{minipage}
 \end{center}
- Yet the estimation is "not that far" from the true position after $200$ steps.
- In the following sections, one will limit the number of steps to $k=26$. 
+
 %Q4
 \chapter{Applying the Monte Carlo algorithm to an artificial submarine 
 tracking problem}
@@ -183,9 +184,9 @@ tracking problem}
 
 As the fourth and fifth questions are both established on applying the algorithm~\ref{MonteCarlo}
 to the submarine tracking problem, one decided to group the main code for questions 4 and 5
-in the function \texttt{q45.m}.\\
+in the function \texttt{q4q5.m}.\\
 \lstinputlisting[caption={The artificial submarine tracking problem initialised with 'data.m'},label={q4q5}]{../matlab/q4q5.m}
-To call \texttt{q45} in the present case, one should use \texttt{q4.m} (to use it with the proper parameters,
+To call \texttt{q4q5} in the present case, one should use \texttt{q4.m} (to use it with the proper parameters,
 plot and save the results one can launch the script \texttt{plot\_q4.m}).\\
 \lstinputlisting[caption={Question 4}]{../matlab/q4.m}
 
