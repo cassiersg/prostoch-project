@@ -141,16 +141,16 @@ For all the methods that use a Monte Carlo algorithm, one built a general functi
 \texttt{particle\_filter.m}, based on the reference document given in the statement
 \footnote{A. Srivastava. Computational methods in statistics. Florida State University, 2009.
 \url{http://stat.fsu.edu/~anuj/pdf/classes/CompStatII10/BOOK.pdf}}.\\
-\lstinputlisting[caption={General Monte Carlo algorithm}]{../matlab/particle_filter.m}
+\lstinputlisting[caption={General Monte Carlo algorithm},label={MonteCarlo}]{../matlab/particle_filter.m}
 The main code used here is the function \texttt{q3.m} (to employ it with the proper
 parameters, plot and save the results one can launch the script \texttt{plot\_q3.m}).
 \newpage
 \lstinputlisting[caption={Comparing the results with Monte Carlo algorithm and the model}]{../matlab/q3.m}
 \section*{Results}
 By ploting the histograms of the distribution of the points used in the Monte Carlo algorithm, 
-with $\sigma_a=0.1$ and $\sigma_{\theta}=0.1$, at the beginning (k=1) one has a gaussian
+with $\sigma_a=0.1$ and $\sigma_{\theta}=0.1$, at the beginning (k=1) one has a look alike gaussian
 distibution for both the X position and Y position. The more k augments, the less the
-distribution looks like a gaussian and the wider is its scope (1 when k=1, to 50 for k=200).
+distribution looks like a gaussian and the wider is its variance (1 when k=1, to 50 for k=200).
 This indicates that the quality of the estimation decreases when $k$ augments.
 
 \begin{center}
@@ -167,22 +167,28 @@ This indicates that the quality of the estimation decreases when $k$ augments.
 	\end{minipage}%
 	\begin{minipage}{.4\textwidth}
 		Plotting the real vs. the estimated position and indicating with dots the (X,Y) of the 
-		different histograms (k=1,50,100,200), one sees that the more $k$ augments
-		the further the estimation is from the real position. Yet the estimation is "not that far"
-		from the true position after $200$ steps. In the following sections, one will limit the number
-		of steps to $k=26$. One can state that the results obtained with the Monte
-		Carlo method seem consistent for this limited number of steps.
+		herein produced histograms (k=1,50,100,200), one sees that the more $k$ augments
+		the further the estimation is from the real position. The bearing is measured at each step (with a small error) and
+		one can check that the result on the angle is convincing. Yet concerning the distance the measures don't bring
+		much relevant information. What helps the best is the variability of the bearing, yet it is not enough. For this
+		reason the distance is quite approximative.
 	\end{minipage}
 \end{center}
-  
+ Yet the estimation is "not that far" from the true position after $200$ steps.
+ In the following sections, one will limit the number of steps to $k=26$. 
 %Q4
 \chapter{Applying the Monte Carlo algorithm to an artificial submarine 
 tracking problem}
 \section*{Code}
-As the fourth and fifth questions are both established on applying the algorithm developed in question
-3 to the submarine tracking problem, one decided to group the main code for questions 4 and 5
-in the function '\textsc{q45.m}'. In the present case, to use it with the proper parameters, plot
-and save the results one can launch the script '\textsc{plot\_q4.m}'.\\
+
+As the fourth and fifth questions are both established on applying the algorithm~\ref{MonteCarlo}
+to the submarine tracking problem, one decided to group the main code for questions 4 and 5
+in the function \texttt{q45.m}.\\
+\lstinputlisting[caption={The artificial submarine tracking problem initialised with 'data.m'},label={q4q5}]{../matlab/q4q5.m}
+To call \texttt{q45} in the present case, one should use \texttt{q4.m} (to use it with the proper parameters,
+plot and save the results one can launch the script \texttt{plot\_q4.m}).\\
+\lstinputlisting[caption={Question 4}]{../matlab/q4.m}
+
 \section*{Results}
 To introduce the results, one uses the following legends\\
 
@@ -196,6 +202,15 @@ To introduce the results, one uses the following legends\\
 	\end{minipage}
 
 \begin{itemize}
+\item $k=1$\\
+The distribution of the speed particles corresponds to the initial distribution ($k=0$) : as one doesn't have yet 2 measures 
+of position of the target, it cannot estimate properly 
+Concerning the cloud of position particles, as one doesn't know the distance but only the bearing, it forms a shape
+that is close to a line. One can easily check by extending the "line" to the initial position of the observer that it 
+follows the bearing.
+
+
+
 \item The position\\
 At the first step, the pre and post resampling clouds of points are forming a line, almost
 the same. The center of gravity of the post resampling cloud is the estimated position
@@ -268,16 +283,6 @@ Results for question 5, part 2:
 
 
 \newpage
-\chapter{Matlab codes}
-\label{codes}
-\appendix
-\chapter*{Question 2}
-\lstinputlisting{../matlab/plot_q2.m}
-\lstinputlisting{../matlab/gen_plot2.m}
-\chapter*{General Monte Carlo method}
-\chapter*{Question 3}
-\lstinputlisting{../matlab/q3.m}
-\lstinputlisting{../matlab/plot_q3.m}
 \chapter*{Solving the submarine tracking problem}
 \lstinputlisting{../matlab/q4q5.m}
 \chapter*{Question 4}
