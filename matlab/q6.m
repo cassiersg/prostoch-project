@@ -47,7 +47,7 @@ for i = 2:k_max
 end
 CRLBrms = squeeze(sqrt(Jinv(1,1,:)+Jinv(2,2,:)))';
 
-% computation of the estimated (absolute) target position using Q52.m
+% computation of the estimated (absolute) target position using Q4.m
 [~, ~, xt_post_resampling, ~] = q4();
 
 % computation of the RMS error for each position
