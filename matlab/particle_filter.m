@@ -52,24 +52,25 @@ for t = 1:t_max
     % correction & resampling
     n_eff = 1/sum(w.^2);
     if n_eff < n_min
+        % indices to take old particles becoming new particles
+        sample = randsample(1:n, n, true, w);
         switch resampling
             case 'SIR'
-                sample = randsample(1:n, n, true, w);
                 x_post(:,:,t) = x_pre(:,sample,t);
             case 'postRPF'
-                %fprintf('resample t= %i, n_eff/n = %f\n', t, n_eff/n);
                 m = mean(x_pre(:,:,t), 2);
                 xt_c = x_pre(:,:,t) - repmat(m, 1, n);
                 S = (repmat(w', dim, 1) .* xt_c) * xt_c';
-                A = chol(S, 'lower');
+                A = chol(S, 'lower'); % such that A*A' = S
                 h_opt = (4/(dim+2))^(1/(dim+4)) * n^(-1/(dim+4));
-                sample = randsample(1:n, n, true, w);
                 x_post(:,:,t) = x_pre(:,sample,t) + h_opt * A * normrnd(0, 1, dim, n);
             otherwise
                 error('Unknown resampling method ''%s''', resampling);
         end
+        % after resampling, all particles have same weight
         weights(:,t+1) = ones(1, n)/n;
     else
+        % update weights without resampling
         x_post(:,:,t) = x_pre(:,:,t);
         weights(:,t+1) = w;
     end
