@@ -280,11 +280,15 @@ To call \texttt{q4q5} \ref{q4q5} in the present case, one should use \texttt{q51
 \section*{Results}
 \begin{itemize}
 \item Using the particle filter created previously\\
-Due to the conception of the filter, changing of the number of particles can only happen when resampling the set (ligne 57 of
-\ref{MonteCarlo}). As it asked to set $\sigma_a$ to zero, there is no change in the velocity and the process noise $\epsilon_k$ 
+Due to the conception of the filter, changing of the number of distinct particles can only happen when resampling the set (ligne 57 of
+\ref{MonteCarlo}) or at the prediction step (due to process noise, \ref{MonteCarlo}, l.78).
+As $\sigma_a = 0$, there is no randomness in the prediction step, thus two indentical particles before this step will remain identical
+after it. Therefore this step will not increase the diversity of particles.
+The resampling step (with SIR filtering) takes the new particles directly from previous ones. Consequently, this step never
+increases the number of different particles and often decreases it significantly, when some particles are more likely than others.
 is equal to zero. Also, the change of bearing is small. Therefore, at this step,  the diversity of the particles can only decrease.
-The effective number of particles is thus decreasing. One then looses the advantage of the Monte Carlo algorithm, based on
-the Law of Large Numbers.\\
+The effective number of particles is thus decreasing. One then looses the advantage of the particle filter, based on
+the law of large numbers.\\
 \begin{center}
  \includegraphics[width=0.66\textwidth]{img/q51.eps}
 \end{center}
@@ -293,12 +297,18 @@ This brings an error on the estimation of the target's position : the last three
 were quite correct.
 
 \item Using a regularized particle filter\\
-By adding some noise in the resampling when necessary (the effective number of particles is too low based on a criterion
-given in the statement), one can keep the number of effective particles sufficiently high.
+By adding some noise in the resampling one can keep the number of effective particles near to the real number of particles,
+using a post-regularized filter. Since the post-regularized filter adds noise to the particles, it may reduce the precision
+of the estimation. Therefore, one only resamples when it is needed, which means when the effective number of particles becomes
+smaller than a fixed threshold.
 \begin{center}
 \includegraphics[width=0.66\textwidth]{img/q52.eps}
 \end{center}
-%TODO je ne sais pas quoi mettre (ptetr qu il n y a rien a mettre...) et je m endors car finalement je n ai pas bu de cafe... argh! je stoppe ici ;)
+
+On the plot, one observes that the post-regularized filter is efficient at keeping the effective number of particles high,
+which makes the filter more reliable and effecient.
+The estimated position is thus more precise with respect to the bearing (the distance with the observer is difficult to
+estimate, and the post-regularization is not a magical solution here).
 \end{itemize}
 %Q6
 \chapter{Analysing the error of the estimation}
@@ -313,31 +323,36 @@ preceding codes :
 \end{center}
 
 At first, one finds that the experimental error (root mean square, RMS) is higher than the lower bound (Carmér-Rao lower bound,
-CRLB), they approximately follow the same course. They both diminish over time, meaning that the estimation converges towards a low variance. These results
- are promising.\\
+CRLB), and they approximately follow the same course. They both diminish over time, meaning that the estimation converges towards a low variance. These results
+ are promising.
 
-Taking a closer look at the CRLB, at the begining the variance tends to augment because the observations do not have much
-influence on the position (the bearing is close to constant, the acceleration close to zero). Starting at $k=6$, the change
+Taking a closer look at the CRLB, at the begining the variance tends to augment because the observations do not give much
+more information on the position than already available when the filter is started
+(the bearing is close to constant). Starting at $k=6$, the change
 of relative position is sufficient for the bearing to change more significantly, the variance then decreases.
 When $k=15$, the observer makes a significant change of direction ; this gives information on the position of the
-target, diminishing the variance ;  the CRLB diminishes substantially. In the end, after $k=15$, the change of bearing is again
+target, diminishing the variance ;  the CRLB diminishes substantially. In the end, after $k=20$, the change of bearing is again
 close to constant and the acceleration close to zero, there is not enough noise in the system and as a result the CRLB augments
 again.
 
 From this, one can state that the quality of the estimation depends on two antagonistic effects : 
 \begin{itemize}
-\item adding entropy to the system by adding noise on the acceleration. This allows to get information and therefore
-augment the precision;
-\item when the new measures do not bring round enough new information, they are redundant and then the precision
-diminishes.
+\item the addition of entropy to the system the random acceleration. This adds uncertainty on the
+    state of observed process, and thus diminishes the quality of the available estimations.
+\item the observation which gives information on the state of the system, reducing uncertainty,
+    augmenting the precision of the estimator. When the bearing measurement the almost the same for
+        a long time, new measures do not bring much new information, they are redundant.
 \end{itemize}
-The fact that one effect induces the other and vice versa allows the estimation to stay close to the reality : it is never perfect but
-it never gets too far.\\
+Here, there is no process noise, so the CRLB only diminishes, except at the beginning: at the firsts steps,
+the uncertainty on the velocity is quickly decreasing while the uncertainty on the position increases a little bit
+(thus the estimation of the whole state, including velocity, is gettit better).
 
-As a suggestion of improvement, one could add the number of particles in the system. It was asked to set it to 5000, 
-by augmenting it we'd have to make more calculations but the variety of particle (the number of non redudant particles)
+The empirical variance of the particle filter indicates that it is suboptimal, but not very far from the CRLB
+(especially as the filter consider that there $\sigma_a \neq 0$, on might maybe get a better estimation using
+the information $\sigma_a = 0$.
+
+As a suggestion of improvement, one could increase the number of particles in the system. It was asked to set it to 5000, 
+by augmenting it we'd have to make more calculations but the variety of particles (the number of non redudant particles)
 would stay higher, therefore enhancing the estimation.
-
-
 
 \end{document}
