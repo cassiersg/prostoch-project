@@ -3,5 +3,4 @@ Ajouter fichiers q4 & q5
 
 \texttt
 
-figure q4
 
