@@ -15,7 +15,7 @@
 \subtitle{}
 \author{\begin{tabular}{cc}
 	\textsc{Cassiers} Gaëtan  & 	$33741300$ \\
-	\textsc{Losseau} Bruno 	&	$33741300$
+	\textsc{Losseau} Bruno 	&	$78861100$
 	 \end{tabular}}
 \date{\today}
 \publishers{}
@@ -31,17 +31,16 @@
 \chapter{Basics}
 \section*{Deriving $\umatrix{F}$ and $\uvec{U}$}
 
-We start by studying the making a discretization of a movemement process in 1D, with the
-variable $x(t)$. If we denote $x_k = x(Tk)$ (with $T$ a given discretization step), we
-get
+One starts by studying the making of a discretization of a movemement process in 1D, with the
+variable $x(t)$. If one denotes $x_k = x(Tk)$ (with $T$ a given discretization step), one gets
 \begin{align*}
     x_{k+1} &= x_k + T\dot{x}_k + \int_{Tk}^{T(k+1)}\int_{Tk}^{t}\ddot{x}(t)\dif t\dif t' \\
     \dot{x}_{k+1} &=  \dot{x}_k + \int_{Tk}^{T(k+1)}\ddot{x}(t)\dif t.
 \end{align*}
-This is a simple discrete-time state model, if we consider that the terms which depends of
+This is a simple discrete-time state model, making the consideration that the terms which depends of
 the integral of $\ddot{x}$
 are an input signal.
-We can generalize this equation to the relative state vector $\uvec{x} = \uvec{x}^t - \uvec{x}^o$:
+One can then generalize this equation to the relative state vector $\uvec{x} = \uvec{x}^t - \uvec{x}^o$ :
 \[\uvec{x}_{k+1} = \umatrix{F}\uvec{x}_k - \uvec{U}_{k,k+1} + \uvec{\epsilon}_k\]
 with
 \begin{itemize}
@@ -62,7 +61,7 @@ the observer caused by the acceleration of the observer.
 
 \section*{Deriving $h(\ubar{x})$}
 Following its definition given in the statement and using the notation $\uvec{x}(i)$
-for the $i$-th element of the vector $\uvec{x}$:
+for the $i$-th element of the vector $\uvec{x}$ :
 \begin{align*}
     h(\uvec{x}_k) &= \mathrm{atan2}(\uvec{x}_k(1), \uvec{x}_k(2)) \\
     &= \begin{cases}
@@ -101,7 +100,7 @@ When there is no noise, one verifies that as the relative velocity is constant a
 the bearing, the angle is constant and the the relative position is linear.\\
 As the acceleration is by default equal to zero and that there is no noise on the acceleration, as the velocity is
 constant, the trajectory is for all $\sigma_{\theta}$ the same.\\
-Concerning the angle, the more we raise $\sigma_{\theta}$ the higher the error on the mesured angle is.
+Concerning the angle, the more one raises $\sigma_{\theta}$ the higher the error on the mesured angle is.
 
 \item varying $\sigma_a$ with $\sigma_\theta=0$
 \begin{center}
@@ -110,9 +109,9 @@ Concerning the angle, the more we raise $\sigma_{\theta}$ the higher the error o
 The more the noise on the acceleration increases, the more the trajectory is impacted. \\
 In this case, the bearing is also impacted, it seems logical as one has changed the state equations :
 the noise on the acceleration does change the relative position, therefore modyfing the true bearing. \\
-From these comments, one could explain the situation stating that $\sigma_a$ represents the change of 
-acceleration of the target, that can not be predicted. The change of acceleration induces a change
-of position, therefrom a change on the bearing.
+From these comments, one could explain the situation stating that $\sigma_a$ represents the prediction of the 
+change of acceleration of the target. The change of acceleration induces a change of position,
+therefrom a change on the bearing.
 
 
 \item varying $\sigma_\theta$ proportionaly to $\sigma_a$
@@ -120,7 +119,7 @@ of position, therefrom a change on the bearing.
 \includegraphics[width=0.66\textwidth]{img/q2_3.eps}
 \end{center}
 The higher $\sigma_a$ is set, the quicker the relative distance augments. Taking a look at the bearing,
-        we observe two trends: a slow (low frequency) variation, due to the acceleration of the target
+        we observe two trends : a slow (low frequency) variation, due to the acceleration of the target
          (which is integrated twice to get the bearing, therefore the variations are slow), and 
          a high frequency variation due to the measurement errors (that are adding a white noise).
 
@@ -169,7 +168,7 @@ This indicates that the quality of the estimation decreases when $k$ augments.
 	\end{minipage}%
 	\begin{minipage}{.4\textwidth}
 		Plotting the real vs. the estimated position and indicating with dots the (X,Y) of the 
-		herein produced histograms (k=1,50,100,200), one sees that the more $k$ augments
+		herein produced histograms (k=1,50,100,200), one sees that the more $k$ increases
 		the further the estimation is from the real position. The bearing is measured at each step (with a small error) and
 		one can check that the result on the angle is convincing. Yet concerning the distance the measures don't bring
 		much relevant information. What helps the best is the variability of the bearing, yet it is not enough. For this
@@ -205,11 +204,11 @@ To introduce the results, one uses the following legends\\
 \begin{itemize}
 \item $k=1$\\
 The distribution of the velocity particles corresponds to the initial distribution ($k=0$) : as one doesn't have yet 2 measures 
-of position of the target, it cannot estimate properly the velocity, the clouds have a large scope.\\
+of position of the target, it cannot estimate properly the velocity and the clouds have a large scope.\\
 Concerning the cloud of position particles, as one doesn't know the distance but only the bearing, it forms a shape
 that is close to a line. One can easily check by extending the "line" to the initial position of the observer that it 
 follows the bearing.\\
-There is no big difference between the pre resampling and the post-resampling because the initial distribution already corresponds
+There is no big difference between the pre-resampling and the post-resampling because the initial distribution already corresponds
 to the observation that is made.\\
 The position and the velocity clouds are not influenced one by another : they mainly depend of the distributions that were
 used to generate them at the begininng.
@@ -217,10 +216,11 @@ used to generate them at the begininng.
 \item $k=2$\\
 The pre-resampling position is now affected by the velocity cloud of the previous step : each pre-resampling particle position
 at $k=2$ is equal to the positon at $k=1$ to which is added the velocity at $k=1$ times the time step, therefrom the cloud forms
-a circle-shape. As one knows the bearing (with a small error indeed), the observations makes the post-resampling cloud
+a circular shape. As one knows the bearing (with a small error indeed), the observations makes the post-resampling cloud
 in a shape that is again close to a line. Compared to $k=1$ the scope of the line is narrowed. \\
-As for the velocity clouds, the pre-resampling is close to the post-resampling at $k=1$. Now that one disposes of two positions,
-the velocity can be better identified : the cloud is shrinked. \\
+As for the velocity clouds, the pre-resampling at $k=2$ is close to the post-resampling at $k=1$. 
+Now that one disposes of two positions, the velocity can be better identified : the post-resampling cloud
+at $k=2$ is shrinked. \\
 At this step, velocity and position have affected one another.
 
 
@@ -242,7 +242,7 @@ to the pre-resampling cloud. Also, the bearing is increasing.\\
 As for the velocity, the particle cloud stays narrow for both the pre and post-resampling.
 
 \item $k=15$\\
-The position of the observer is especial : it has just changed its direction. Concerning the bearing,
+The position of the observer is distinctive : it has just changed its direction. Concerning the bearing,
 it has changed sign. The clouds are properly oriented, in accordance with the bearing.\\
 The velocity clouds are converging : compared to $k=3$ the range of the particles is divided by a factor of order 10.
 
@@ -272,15 +272,19 @@ Since $k=15$, there hasn't been any improvement in the range of the velocity clo
 \section*{Code}
 As the fourth and fifth questions are both established on applying the algorithm~\ref{MonteCarlo}
 to the submarine tracking problem, one decided to group the main code for questions 4 and 5
-in the function \texttt{q4q5.m}.\\
-To call \texttt{q4q5} \ref{q4q5} in the present case, one should use \texttt{q51.m} and \texttt{q52.m} 
+in the function \texttt{q4q5.m} ( \ref{q4q5}).\\
+To call \texttt{q4q5} in the present case, one shall use \texttt{q51.m} and \texttt{q52.m} 
 (to use it with the proper parameters, plot and save the results one can simply launch the script \texttt{plot\_q5.m}).\\
 \lstinputlisting[caption={}]{../matlab_report/q51.m}
 \lstinputlisting[caption={Question 5}]{../matlab_report/q52.m}
 \section*{Results}
 \begin{itemize}
 \item Using the particle filter created previously\\
+<<<<<<< HEAD
 Due to the conception of the filter, changing of the number of distinct particles can only happen when resampling the set (ligne 57 of
+=======
+Due to the conception of the filter, the change of the number of distinct particles can only happen when resampling the set (ligne 57 of
+>>>>>>> master
 \ref{MonteCarlo}) or at the prediction step (due to process noise, \ref{MonteCarlo}, l.78).
 As $\sigma_a = 0$, there is no randomness in the prediction step, thus two indentical particles before this step will remain identical
 after it. Therefore this step will not increase the diversity of particles.
@@ -333,23 +337,24 @@ of relative position is sufficient for the bearing to change more significantly,
 When $k=15$, the observer makes a significant change of direction ; this gives information on the position of the
 target, diminishing the variance ;  the CRLB diminishes substantially. In the end, after $k=20$, the change of bearing is again
 close to constant and the acceleration close to zero, there is not enough noise in the system and as a result the CRLB augments
-again.
+again.\\
 
 From this, one can state that the quality of the estimation depends on two antagonistic effects : 
 \begin{itemize}
-\item the addition of entropy to the system the random acceleration. This adds uncertainty on the
+\item the addition of entropy to the system by the random acceleration. This adds uncertainty on the
     state of observed process, and thus diminishes the quality of the available estimations.
 \item the observation which gives information on the state of the system, reducing uncertainty,
     augmenting the precision of the estimator. When the bearing measurement the almost the same for
         a long time, new measures do not bring much new information, they are redundant.
 \end{itemize}
-Here, there is no process noise, so the CRLB only diminishes, except at the beginning: at the firsts steps,
+Here there is no process noise, so the CRLB only diminishes, except at the beginning : at the firsts steps,
 the uncertainty on the velocity is quickly decreasing while the uncertainty on the position increases a little bit
-(thus the estimation of the whole state, including velocity, is gettit better).
+(thus the estimation of the whole state, including velocity, is getting better).\\
+
 
 The empirical variance of the particle filter indicates that it is suboptimal, but not very far from the CRLB
-(especially as the filter consider that there $\sigma_a \neq 0$, on might maybe get a better estimation using
-the information $\sigma_a = 0$.
+(especially as the filter consider that $\sigma_a \neq 0$, one might maybe get a better estimation using
+the information $\sigma_a = 0$).\\
 
 As a suggestion of improvement, one could increase the number of particles in the system. It was asked to set it to 5000, 
 by augmenting it we'd have to make more calculations but the variety of particles (the number of non redudant particles)
