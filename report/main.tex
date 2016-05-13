@@ -86,10 +86,10 @@ used to plot the required results (herein \texttt{plot\_q2.m} and \texttt{gen\_p
 can be found in the linked archive. To obtain the results for all the questions, simply launch
 the script \texttt{main.m}.\\
 
-\lstinputlisting[caption={Simulating the system}]{../matlab/q2.m}
+\lstinputlisting[caption={Simulating the system}]{../matlab_report/q2.m}
 
 Every time a code uses a parameter given in the statement, it calls the following function : 
-\lstinputlisting[caption={Parameters given in the statement}]{../matlab/gen_parameters.m}
+\lstinputlisting[caption={Parameters given in the statement}]{../matlab_report/gen_parameters.m}
 
 \section*{Results}
 \begin{itemize}
@@ -143,11 +143,11 @@ For all the methods that use a Monte Carlo algorithm, one built a general functi
 \texttt{particle\_filter.m}, based on the reference document given in the statement
 \footnote{A. Srivastava. Computational methods in statistics. Florida State University, 2009.
 \url{http://stat.fsu.edu/~anuj/pdf/classes/CompStatII10/BOOK.pdf}}.\\
-\lstinputlisting[caption={General Monte Carlo algorithm},label={MonteCarlo}]{../matlab/particle_filter.m}
+\lstinputlisting[caption={General Monte Carlo algorithm},label={MonteCarlo}]{../matlab_report/particle_filter.m}
 The main code used here is the function \texttt{q3.m} (to employ it with the proper
 parameters, plot and save the results one can launch the script \texttt{plot\_q3.m}).
 \newpage
-\lstinputlisting[caption={Comparing the results with Monte Carlo algorithm and the model}]{../matlab/q3.m}
+\lstinputlisting[caption={Comparing the results with Monte Carlo algorithm and the model}]{../matlab_report/q3.m}
 \section*{Results}
 By ploting the histograms of the distribution of the points used in the Monte Carlo algorithm, 
 with $\sigma_a=0.1$ and $\sigma_{\theta}=0.1$, at the beginning (k=1) one has a look alike gaussian
@@ -185,10 +185,10 @@ tracking problem}
 As the fourth and fifth questions are both established on applying the algorithm~\ref{MonteCarlo}
 to the submarine tracking problem, one decided to group the main code for questions 4 and 5
 in the function \texttt{q4q5.m}.\\
-\lstinputlisting[caption={The artificial submarine tracking problem initialised with 'data.m'},label={q4q5}]{../matlab/q4q5.m}
+\lstinputlisting[caption={The artificial submarine tracking problem initialised with 'data.m'},label={q4q5}]{../matlab_report/q4q5.m}
 To call \texttt{q4q5} in the present case, one should use \texttt{q4.m} (to use it with the proper parameters,
 plot and save the results one can launch the script \texttt{plot\_q4.m}).\\
-\lstinputlisting[caption={Question 4}]{../matlab/q4.m}
+\lstinputlisting[caption={Question 4}]{../matlab_report/q4.m}
 
 \section*{Results}
 To introduce the results, one uses the following legends\\
@@ -275,8 +275,8 @@ to the submarine tracking problem, one decided to group the main code for questi
 in the function \texttt{q4q5.m}.\\
 To call \texttt{q4q5} \ref{q4q5} in the present case, one should use \texttt{q51.m} and \texttt{q52.m} 
 (to use it with the proper parameters, plot and save the results one can simply launch the script \texttt{plot\_q5.m}).\\
-\lstinputlisting[caption={}]{../matlab/q51.m}
-\lstinputlisting[caption={Question 5}]{../matlab/q52.m}
+\lstinputlisting[caption={}]{../matlab_report/q51.m}
+\lstinputlisting[caption={Question 5}]{../matlab_report/q52.m}
 \section*{Results}
 \begin{itemize}
 \item Using the particle filter created previously\\
@@ -315,7 +315,7 @@ estimate, and the post-regularization is not a magical solution here).
 \section*{Code}
 One develops the Carmér-Rao lower bound and then the root mean square error for the submarine-tracking problem, using the
 preceding codes :
-\lstinputlisting[caption={Question 6}]{../matlab/q6.m}
+\lstinputlisting[caption={Question 6}]{../matlab_report/q6.m}
 
 \section*{Results}
 \begin{center}
