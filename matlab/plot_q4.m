@@ -18,6 +18,7 @@ for k = [1, 2, 3, 15, 26]
 	plot(xt_pre_resampling(1,:,k), xt_pre_resampling(2,:,k), '.', 'MarkerEdgeColor', [.9 .9 0]);
 	plot(xt_post_resampling(1,:,k), xt_post_resampling(2,:,k), '.', 'MarkerEdgeColor', [1 .5 0]);
     plot(observer(1,:), observer(2,:), 'r', 'LineWidth', 1.5);
+    plot(observer(1,k), observer(2,k), '.r', 'MarkerSize', 15);
     plot(target(1,:), target(2,:), 'Color', [.3 .3 .3], 'LineWidth', 1.5);
 	plot(xt_estimated(1,1:k), xt_estimated(2,1:k), '*', 'MarkerEdgeColor', [0 0 .8]);
 %    legend({'pre resampling', 'post resampling', 'observer', 'target', 'estimated target'}, 'Location', 'best');
