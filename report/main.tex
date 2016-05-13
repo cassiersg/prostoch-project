@@ -280,7 +280,11 @@ To call \texttt{q4q5} in the present case, one shall use \texttt{q51.m} and \tex
 \section*{Results}
 \begin{itemize}
 \item Using the particle filter created previously\\
+<<<<<<< HEAD
+Due to the conception of the filter, changing of the number of distinct particles can only happen when resampling the set (ligne 57 of
+=======
 Due to the conception of the filter, the change of the number of distinct particles can only happen when resampling the set (ligne 57 of
+>>>>>>> master
 \ref{MonteCarlo}) or at the prediction step (due to process noise, \ref{MonteCarlo}, l.78).
 As $\sigma_a = 0$, there is no randomness in the prediction step, thus two indentical particles before this step will remain identical
 after it. Therefore this step will not increase the diversity of particles.
