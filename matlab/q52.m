@@ -9,7 +9,8 @@ function [xt_estimated, xt_pre_resampling, xt_post_resampling, n_diff] =...
 % For a graphical visualization of the results, see PLOT_Q5.m
 % OUTPUT : see Q4Q5.m
 
+
 [xt_estimated, xt_pre_resampling, xt_post_resampling, n_diff] =...
-    q4q5('postRPF', 0, +Inf);
+    q4q5('postRPF', 0, 5000/3);
 
 end

@@ -5,10 +5,10 @@
 
 k = 201; % As it is asked to go 200 steps ahead and k=1 is given.
 
-sA = 0.01;
-sT = 0.01;
+s_a = 0.01;
+s_t = 0.01;
 
-[x, xt_estimated, xt_post_resampling] = q3(sA, sT, k);
+[x, xt_estimated, xt_post_resampling] = q3(s_a, s_t, k);
 
 for t = [2, 51, 101, 201]
     f = figure();
@@ -21,7 +21,7 @@ for t = [2, 51, 101, 201]
     histogram(xt_post_resampling(2,:,t), 50);
     xlabel('Y');
     ylim([0 400]);
-    saveas(gcf, sprintf('Results/q3_hist_%i.png', t-1));
+    savefig(sprintf('q3_hist_%i', t-1));
     close(f);
 end
 t = [2, 51, 101, 201];
@@ -33,5 +33,5 @@ legend({'real', 'estimated'}, 'Location', 'best');
 
 xlabel('X');
 ylabel('Y');
-saveas(gcf, sprintf('Results/q3_path.png'));
+savefig(sprintf('q3_path'));
 close(f);
