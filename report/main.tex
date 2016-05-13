@@ -267,32 +267,77 @@ Since $k=15$, there hasn't been any improvement in the range of the velocity clo
 
 \end{itemize} 
 
-\chapter{Improving the results using a post-regularised sequential
-Monte Carlo method}
+%Q5
+\chapter{Improving the results using a post-regularised sequential Monte Carlo method}
 \section*{Code}
 As the fourth and fifth questions are both established on applying the algorithm~\ref{MonteCarlo}
 to the submarine tracking problem, one decided to group the main code for questions 4 and 5
-in the function \texttt{q45.m}.\\
-To call \texttt{q4q5} \ref{q4q5} in the present case, one should use \texttt{q5.m} (to use it with the proper parameters,
-plot and save the results one can launch the script \texttt{plot\_q5.m}).\\
-%\lstinputlisting[caption={The artificial submarine tracking problem initialised with 'data.m'}]{../matlab/q5.m}
-
+in the function \texttt{q4q5.m}.\\
+To call \texttt{q4q5} \ref{q4q5} in the present case, one should use \texttt{q51.m} and \texttt{q52.m} 
+(to use it with the proper parameters, plot and save the results one can simply launch the script \texttt{plot\_q5.m}).\\
+\lstinputlisting[caption={}]{../matlab/q51.m}
+\lstinputlisting[caption={Question 5}]{../matlab/q52.m}
 \section*{Results}
-Results for question 5, part 1:
+\begin{itemize}
+\item Using the particle filter created previously\\
+Due to the conception of the filter, changing of the number of particles can only happen when resampling the set (ligne 57 of
+\ref{MonteCarlo}). As it asked to set $\sigma_a$ to zero, there is no change in the velocity and the process noise $\epsilon_k$ 
+is equal to zero. Also, the change of bearing is small. Therefore, at this step,  the diversity of the particles can only decrease.
+The effective number of particles is thus decreasing. One then looses the advantage of the Monte Carlo algorithm, based on
+the Law of Large Numbers.\\
 \begin{center}
-   \includegraphics[width=0.6\textwidth]{img/q51.eps}
+ \includegraphics[width=0.66\textwidth]{img/q51.eps}
 \end{center}
+Taking a look at the results, one sees that the number of effective particles decreases exponentially with the number of steps.
+This brings an error on the estimation of the target's position : the last three positions are off track whilst the previous three
+were quite correct.
 
-Results for question 5, part 2:
+\item Using a regularized particle filter\\
+By adding some noise in the resampling when necessary (the effective number of particles is too low based on a criterion
+given in the statement), one can keep the number of effective particles sufficiently high.
 \begin{center}
-   \includegraphics[width=0.6\textwidth]{img/q52.eps}
+\includegraphics[width=0.66\textwidth]{img/q52.eps}
 \end{center}
-
-\chapter{Question 6}
+%TODO je ne sais pas quoi mettre (ptetr qu il n y a rien a mettre...) et je m endors car finalement je n ai pas bu de cafe... argh! je stoppe ici ;)
+\end{itemize}
+%Q6
+\chapter{Analysing the error of the estimation}
 \section*{Code}
-
+One develops the Carmér-Rao lower bound and then the root mean square error for the submarine-tracking problem, using the
+preceding codes :
+\lstinputlisting[caption={Question 6}]{../matlab/q6.m}
 
 \section*{Results}
+\begin{center}
+   \includegraphics[width=0.92\textwidth]{img/q6.png}
+\end{center}
+
+At first, one finds that the experimental error (root mean square, RMS) is higher than the lower bound (Carmér-Rao lower bound,
+CRLB), they approximately follow the same course. They both diminish over time, meaning that the estimation converges towards a low variance. These results
+ are promising.\\
+
+Taking a closer look at the CRLB, at the begining the variance tends to augment because the observations do not have much
+influence on the position (the bearing is close to constant, the acceleration close to zero). Starting at $k=6$, the change
+of relative position is sufficient for the bearing to change more significantly, the variance then decreases.
+When $k=15$, the observer makes a significant change of direction ; this gives information on the position of the
+target, diminishing the variance ;  the CRLB diminishes substantially. In the end, after $k=15$, the change of bearing is again
+close to constant and the acceleration close to zero, there is not enough noise in the system and as a result the CRLB augments
+again.
+
+From this, one can state that the quality of the estimation depends on two antagonistic effects : 
+\begin{itemize}
+\item adding entropy to the system by adding noise on the acceleration. This allows to get information and therefore
+augment the precision;
+\item when the new measures do not bring round enough new information, they are redundant and then the precision
+diminishes.
+\end{itemize}
+The fact that one effect induces the other and vice versa allows the estimation to stay close to the reality : it is never perfect but
+it never gets too far.\\
+
+As a suggestion of improvement, one could add the number of particles in the system. It was asked to set it to 5000, 
+by augmenting it we'd have to make more calculations but the variety of particle (the number of non redudant particles)
+would stay higher, therefore enhancing the estimation.
+
 
 
 \end{document}

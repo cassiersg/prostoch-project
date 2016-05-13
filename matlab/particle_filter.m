@@ -63,7 +63,7 @@ for t = 1:t_max
                 S = (repmat(w', dim, 1) .* xt_c) * xt_c';
                 A = chol(S, 'lower'); % such that A*A' = S
                 h_opt = (4/(dim+2))^(1/(dim+4)) * n^(-1/(dim+4));
-                x_post(:,:,t) = x_pre(:,sample,t) + h_opt * A * normrnd(0, 1, dim, n);
+                x_post(:,:,t) = x_pre(:,sample,t) + h_opt*A*normrnd(0,1,dim,n);
             otherwise
                 error('Unknown resampling method ''%s''', resampling);
         end
